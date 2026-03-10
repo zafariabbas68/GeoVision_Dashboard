@@ -1,146 +1,177 @@
-
 # 🌍 GeoVision Dashboard
 
 [![Angular](https://img.shields.io/badge/Angular-19.2.1-red?logo=angular)](https://angular.io/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://python.org)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite)](https://sqlite.org/)
+[![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet)](https://leafletjs.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-A full-stack Earth Observation and Remote Sensing Dashboard built with Angular and FastAPI. Monitor satellites, vegetation indices (NDVI), weather patterns, and manage geographic locations in real-time.
-
-## 🚀 **Live Demo**
-
-- **Frontend Application**: [https://geovision-dashboard.vercel.app](https://geovision-dashboard.vercel.app)
-- **Backend API**: [https://geovision-backend.vercel.app](https://geovision-backend.vercel.app)
-- **API Documentation**: [https://geovision-backend.vercel.app/docs](https://geovision-backend.vercel.app/docs)
+<div align="center">
+  <img src="https://via.placeholder.com/800x400/0a1929/ffffff?text=GeoVision+Dashboard" alt="GeoVision Dashboard Banner" width="800"/>
+  <p><em>A comprehensive Earth Observation and Remote Sensing Dashboard for satellite tracking, vegetation analysis, and weather monitoring</em></p>
+</div>
 
 ## 📋 **Table of Contents**
+- [Overview](#-overview)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
+- [Architecture](#-architecture)
 - [Prerequisites](#-prerequisites)
-- [Local Development Setup](#-local-development-setup)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Documentation](#-api-documentation)
 - [Deployment](#-deployment)
-- [API Endpoints](#-api-endpoints)
-- [Environment Variables](#-environment-variables)
 - [Screenshots](#-screenshots)
 - [Contributing](#-contributing)
 - [License](#-license)
-- [Author](#-author)
+- [Contact](#-contact)
+
+---
+
+## 🔭 **Overview**
+
+GeoVision Dashboard is a powerful full-stack web application designed for Earth Observation enthusiasts, researchers, and professionals. It provides real-time access to satellite data, vegetation health indices (NDVI), weather patterns, and geographic location management through an intuitive and responsive interface.
+
+Built with modern technologies, this platform serves as a comprehensive tool for monitoring our planet from space, analyzing environmental changes, and making data-driven decisions.
+
+---
 
 ## ✨ **Features**
 
-### 🛰️ **Satellite Tracking**
-- Real-time satellite position monitoring
-- Pass predictions for any location
-- Active satellite catalog (ISS, Sentinel, Landsat, NOAA)
-- Interactive world map with satellite markers
+### 🛰️ **Satellite Tracking System**
+- **Real-time Positioning**: Track satellites including ISS, Sentinel, Landsat, and NOAA in real-time
+- **Pass Predictions**: Calculate and display upcoming satellite passes for any location
+- **Interactive Maps**: Visualize satellite orbits and positions on an interactive world map
+- **Satellite Catalog**: Comprehensive database with orbital parameters and metadata
 
-### 🌿 **NDVI Analysis**
-- Vegetation Health Index visualization
-- Color-coded NDVI maps (dense vegetation to barren land)
-- Time series analysis for vegetation changes
-- Regional vegetation statistics
+### 🌿 **NDVI Analysis Module**
+- **Vegetation Health Monitoring**: Calculate and visualize NDVI (Normalized Difference Vegetation Index)
+- **Color-coded Visualization**: Intuitive color mapping from dense vegetation (green) to barren land (brown)
+- **Time Series Analysis**: Track vegetation changes over time with historical data
+- **Regional Statistics**: Generate statistics for specific geographic areas
 
-### ☁️ **Weather Dashboard**
-- Current weather conditions with 5-day forecast
-- Temperature, humidity, wind speed, pressure
-- Interactive weather maps
-- Location-based weather search
+### ☁️ **Weather Intelligence**
+- **Current Conditions**: Real-time weather data including temperature, humidity, and wind speed
+- **5-Day Forecast**: Extended weather predictions with hourly breakdowns
+- **Weather Maps**: Interactive precipitation and temperature maps
+- **Location Search**: Search weather by city name or geographic coordinates
 
 ### 📍 **Location Management**
-- Save and manage favorite locations
-- Quick access to satellite passes for saved locations
-- Location-based NDVI and weather data
-- CRUD operations for location management
+- **Save Favorites**: Store and manage frequently accessed locations
+- **Quick Access**: One-click access to satellite passes, NDVI, and weather for saved locations
+- **Geocoding**: Convert addresses to coordinates and vice versa
+- **Bulk Operations**: Import/export location data
 
-### 🔐 **Authentication**
-- JWT-based authentication
-- Role-based access control
-- Secure login/register system
-- Protected routes with AuthGuard
+### 🔐 **User System**
+- **Secure Authentication**: JWT-based authentication with role-based access control
+- **User Profiles**: Personalized dashboards and saved preferences
+- **Session Management**: Automatic token refresh and secure logout
+
+---
 
 ## 🛠️ **Tech Stack**
 
 ### **Frontend**
-- **Framework**: Angular 21
-- **UI Library**: Bootstrap 5
-- **Icons**: Bootstrap Icons
-- **Maps**: Leaflet
-- **Charts**: Chart.js / ng2-charts
-- **HTTP Client**: Angular HttpClient
-- **Authentication**: JWT with Angular Interceptor
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Angular | 19.2.1 | Core framework |
+| Bootstrap 5 | 5.3 | UI components and styling |
+| Leaflet | 1.9 | Interactive maps |
+| Chart.js | 4.4 | Data visualization |
+| ng2-charts | 6.0 | Angular wrapper for Chart.js |
+| RxJS | 7.8 | Reactive programming |
+| TypeScript | 5.4 | Type-safe JavaScript |
 
 ### **Backend**
-- **Framework**: FastAPI (Python)
-- **Database**: SQLite (dev) / PostgreSQL (prod)
-- **Authentication**: JWT with passlib
-- **ORM**: SQLAlchemy
-- **Migrations**: Alembic
-- **API Docs**: Swagger UI / ReDoc
-- **External APIs**: OpenWeatherMap (optional)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| FastAPI | 0.104.1 | Web framework |
+| Python | 3.9+ | Programming language |
+| SQLAlchemy | 2.0 | ORM for database operations |
+| Pydantic | 2.5 | Data validation |
+| JWT | 2.8 | Authentication |
+| Passlib | 1.7 | Password hashing |
+| Uvicorn | 0.24 | ASGI server |
 
-### **DevOps**
-- **Version Control**: Git & GitHub
-- **Frontend Hosting**: Vercel
-- **Backend Hosting**: Vercel Serverless Functions
-- **Database Hosting**: Neon / Supabase / Render
+### **Database & Infrastructure**
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| Database | SQLite/PostgreSQL | Data persistence |
+| Migrations | Alembic | Database version control |
+| Hosting | Vercel | Frontend & backend deployment |
+| Version Control | Git/GitHub | Source code management |
 
-## 📁 **Project Structure**
-geovision-dashboard/
-├── backend/ # FastAPI Backend
-│ ├── app/
-│ │ ├── init.py
-│ │ ├── main.py # Main FastAPI application
-│ │ ├── database.py # Database configuration
-│ │ ├── models.py # SQLAlchemy models
-│ │ ├── auth/ # Authentication module
-│ │ ├── satellites/ # Satellite tracking module
-│ │ ├── indices/ # NDVI/vegetation indices
-│ │ ├── weather/ # Weather module
-│ │ └── geospatial/ # Geospatial utilities
-│ ├── requirements.txt # Python dependencies
-│ └── .env # Environment variables
-├── frontend/ # Angular Frontend
-│ ├── src/
-│ │ ├── app/
-│ │ │ ├── dashboard/ # Main dashboard
-│ │ │ ├── satellite-tracker/ # Satellite tracking
-│ │ │ ├── ndvi-viewer/ # NDVI visualization
-│ │ │ ├── weather/ # Weather dashboard
-│ │ │ ├── saved-locations/ # Location management
-│ │ │ ├── login/ # Authentication
-│ │ │ ├── services/ # API services
-│ │ │ └── guards/ # Auth guards
-│ │ ├── environments/ # Environment configs
-│ │ └── assets/ # Static assets
-│ ├── angular.json
-│ ├── package.json
-│ └── vercel.json # Vercel deployment config
-├── api/ # Vercel serverless functions
-│ └── index.py # Backend entry point for Vercel
-├── vercel.json # Root Vercel configuration
-├── requirements.txt # Production requirements
-├── LICENSE # MIT License
-└── README.md # This file
+---
 
-text
+## 🏗️ **Architecture**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Client Browser                          │
+└───────────────────┬─────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Angular Frontend                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Auth      │  │  Dashboard  │  │   Services  │        │
+│  │   Module    │  │   Module    │  │   Layer     │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│                                                             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │  Satellite  │  │    NDVI     │  │   Weather   │        │
+│  │   Tracker   │  │   Viewer    │  │  Dashboard  │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+└───────────────────┬─────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    FastAPI Backend                           │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Auth      │  │ Satellites  │  │   Indices   │        │
+│  │   Routes    │  │   Routes    │  │   Routes    │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│                                                             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Weather   │  │ Geospatial  │  │   Location  │        │
+│  │   Routes    │  │   Utils     │  │   Routes    │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+└───────────────────┬─────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│                        Database                              │
+│                  (SQLite/PostgreSQL)                         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## 📋 **Prerequisites**
 
-- **Node.js** 18+ and npm 9+
-- **Python** 3.9+
-- **Angular CLI** 17+ (`npm install -g @angular/cli`)
-- **Git** for version control
+Before you begin, ensure you have the following installed:
+- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
+- **npm** (v9 or higher) - Comes with Node.js
+- **Python** (v3.9 or higher) - [Download](https://python.org/)
+- **Angular CLI** (v17 or higher) - `npm install -g @angular/cli`
+- **Git** - [Download](https://git-scm.com/)
+- **Code Editor** - VS Code recommended
 
-## 🔧 **Local Development Setup**
+---
 
-### **Backend Setup**
+## 🔧 **Installation**
 
+### **1. Clone the Repository**
 ```bash
-# Clone the repository
-git clone https://github.com/zafariabbas68/GeoVision-Dashboard.git
-cd GeoVision-Dashboard/backend
+git clone https://github.com/zafariabbas68/GeoVision_Dashboard.git
+cd GeoVision_Dashboard
+```
+
+### **2. Backend Setup**
+```bash
+# Navigate to backend directory
+cd backend
 
 # Create virtual environment
 python -m venv venv
@@ -154,123 +185,322 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Create .env file with your configuration
+# Create environment configuration file
 cat > .env << EOF
 DATABASE_URL=sqlite:///./geovision.db
-SECRET_KEY=your-secret-key-here
+SECRET_KEY=your-super-secret-key-change-this-in-production
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-OPENWEATHER_API_KEY=your-api-key-here
+OPENWEATHER_API_KEY=your-openweather-api-key  # Optional, for weather data
 EOF
 
+# Initialize the database
+python -c "from app.database import Base, engine; Base.metadata.create_all(bind=engine)"
+
 # Start the backend server
-uvicorn app.main:app --reload --port 8000
-The backend will be available at:
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
-API: http://localhost:8000
-Docs: http://localhost:8000/docs
-Frontend Setup
-
-bash
-# In a new terminal, navigate to frontend
-cd ../frontend
+### **3. Frontend Setup**
+```bash
+# Open a new terminal window
+cd frontend
 
 # Install dependencies
 npm install
 
+# Configure environment
+cat > src/environments/environment.ts << EOF
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8000/api'
+};
+EOF
+
 # Start the development server
-ng serve --port 4200
-The frontend will be available at: http://localhost:4200
+ng serve --open
+```
 
-Login with: admin / admin123
+### **4. Access the Application**
+- **Frontend**: http://localhost:4200
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+- **Alternative API Docs**: http://localhost:8000/redoc
 
-🚀 Deployment
+---
 
-Frontend Deployment (Vercel)
+## 🚀 **Usage**
 
-bash
+### **Default Login Credentials**
+After first setup, you can use these credentials:
+- **Username**: `admin`
+- **Password**: `admin123`
+
+### **Quick Start Guide**
+
+1. **Explore the Dashboard**
+   - View system statistics and quick actions
+   - Access all modules from the navigation bar
+
+2. **Track Satellites**
+   - Go to "Satellite Tracker" from the menu
+   - Select a satellite from the dropdown
+   - Click on the map to get pass predictions
+   - View orbital parameters and real-time position
+
+3. **Analyze Vegetation**
+   - Navigate to "NDVI Viewer"
+   - Enter a location or select from saved locations
+   - Adjust date range for time series analysis
+   - Download NDVI maps and statistics
+
+4. **Check Weather**
+   - Visit "Weather Dashboard"
+   - Search for any city worldwide
+   - View current conditions and 5-day forecast
+   - Explore interactive weather maps
+
+5. **Manage Locations**
+   - Go to "Saved Locations"
+   - Add new locations with custom names
+   - Organize locations into categories
+   - Quick access to all location-based features
+
+---
+
+## 📚 **API Documentation**
+
+### **Authentication Endpoints**
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| POST | `/api/auth/register` | Register new user | `{username, email, password}` |
+| POST | `/api/auth/login` | User login | `{username, password}` |
+| GET | `/api/auth/me` | Get current user | - |
+
+### **Satellite Endpoints**
+| Method | Endpoint | Description | Parameters |
+|--------|----------|-------------|------------|
+| GET | `/api/satellites` | Get all satellites | - |
+| GET | `/api/satellites/{id}` | Get satellite by ID | `id` |
+| GET | `/api/satellites/passes/{lat}/{lon}` | Get satellite passes | `lat, lon, days?` |
+
+### **NDVI Endpoints**
+| Method | Endpoint | Description | Parameters |
+|--------|----------|-------------|------------|
+| GET | `/api/ndvi/{location}` | Get NDVI for location | `location` |
+| GET | `/api/ndvi/historical/{lat}/{lon}` | Historical NDVI data | `lat, lon, start_date?, end_date?` |
+
+### **Weather Endpoints**
+| Method | Endpoint | Description | Parameters |
+|--------|----------|-------------|------------|
+| GET | `/api/weather/current/{city}` | Current weather | `city` |
+| GET | `/api/weather/forecast/{city}` | 5-day forecast | `city` |
+
+### **Location Endpoints**
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| GET | `/api/locations` | Get saved locations | - |
+| POST | `/api/locations` | Save new location | `{name, lat, lon}` |
+| PUT | `/api/locations/{id}` | Update location | `{name, lat, lon}` |
+| DELETE | `/api/locations/{id}` | Delete location | - |
+
+---
+
+## 🚢 **Deployment**
+
+### **Frontend Deployment on Vercel**
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
 # Navigate to frontend directory
 cd frontend
 
 # Deploy to Vercel
 vercel
 
-# Or connect your GitHub repository at https://vercel.com
-Backend Deployment (Vercel)
+# Follow the prompts and set environment variables:
+# - production: true
+# - apiUrl: https://your-backend-url.vercel.app/api
+```
 
-bash
-# From project root, create API handler
+### **Backend Deployment on Vercel**
+1. **Prepare backend for serverless deployment:**
+```bash
+# From project root, create API directory
 mkdir -p api
-cp backend/app/main.py api/index.py  # (adjusted for serverless)
 
-# Deploy to Vercel
+# Create a serverless entry point
+cat > api/index.py << EOF
+from backend.app.main import app
+
+# Vercel serverless handler
+handler = app
+EOF
+
+# Create vercel.json in root
+cat > vercel.json << EOF
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    }
+  ]
+}
+EOF
+```
+
+2. **Deploy backend:**
+```bash
+# Deploy from project root
 vercel
-🌐 API Endpoints
 
-Method	Endpoint	Description
-GET	/	Root endpoint with API info
-GET	/api/health	Health check
-GET	/api/satellites	Get satellite data
-GET	/api/ndvi/{location}	Get NDVI for location
-GET	/api/weather/{city}	Get weather data
-POST	/api/auth/login	User login
-POST	/api/auth/register	Register new user
-GET	/api/auth/me	Get current user info
-GET	/api/locations	Get saved locations
-POST	/api/locations	Save new location
-🔐 Environment Variables
+# Set environment variables in Vercel dashboard:
+# - DATABASE_URL (use PostgreSQL for production)
+# - SECRET_KEY
+# - OPENWEATHER_API_KEY
+```
 
-Backend (.env)
+### **Production Database Setup**
+For production, use PostgreSQL:
+```bash
+# Example using Neon (free tier)
+# Sign up at https://neon.tech
+# Create a database and get connection string
 
-text
-DATABASE_URL=postgresql://user:password@host:5432/geovision
-SECRET_KEY=your-secret-key
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-OPENWEATHER_API_KEY=your-api-key
-Frontend (environments/)
+# Update your DATABASE_URL environment variable
+DATABASE_URL=postgresql://user:password@ep-xyz.region.aws.neon.tech/dbname
+```
 
-typescript
-// environment.ts (development)
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8000/api'
-};
+---
 
-// environment.prod.ts (production)
-export const environment = {
-  production: true,
-  apiUrl: 'https://your-backend-url.vercel.app/api'
-};
-📸 Screenshots
+## 📸 **Screenshots**
 
-Dashboard	Satellite Tracker	NDVI Viewer
-https://via.placeholder.com/300x200	https://via.placeholder.com/300x200	https://via.placeholder.com/300x200
-🤝 Contributing
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><b>Main Dashboard</b></td>
+      <td align="center"><b>Satellite Tracker</b></td>
+    </tr>
+    <tr>
+      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Dashboard+View" width="400"/></td>
+      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Satellite+Tracking" width="400"/></td>
+    </tr>
+    <tr>
+      <td align="center"><b>NDVI Analysis</b></td>
+      <td align="center"><b>Weather Dashboard</b></td>
+    </tr>
+    <tr>
+      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=NDVI+Visualization" width="400"/></td>
+      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Weather+Forecast" width="400"/></td>
+    </tr>
+  </table>
+</div>
 
-Contributions are welcome! Please follow these steps:
+---
 
-Fork the repository
-Create a feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-📄 License
+## 🤝 **Contributing**
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-👨‍💻 Author
+### **Contribution Guidelines**
 
-Ghulam Abbas Zafari
+1. **Fork the Project**
+   ```bash
+   git clone https://github.com/your-username/GeoVision_Dashboard.git
+   cd GeoVision_Dashboard
+   ```
 
-GitHub: @zafariabbas68
-Email: ghulamabbas.zafari@mail.polimi.it
-LinkedIn: [Your LinkedIn Profile]
-Personal Website: https://personal-website-gaz.onrender.com
-🙏 Acknowledgments
+2. **Create Your Feature Branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
 
-Angular Team for the amazing framework
-FastAPI for the excellent Python framework
-Vercel for free hosting
-Leaflet for open-source maps
-OpenStreetMap for map data
-NASA for satellite data APIs
-⭐ Star this repository if you find it useful!
+3. **Commit Your Changes**
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+
+4. **Push to the Branch**
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+
+5. **Open a Pull Request**
+
+### **Development Guidelines**
+- Follow existing code style and conventions
+- Write meaningful commit messages
+- Update documentation for new features
+- Add tests for new functionality
+- Ensure all tests pass before submitting PR
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2025 Ghulam Abbas Zafari
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files...
+```
+
+---
+
+## 📞 **Contact**
+
+**Ghulam Abbas Zafari**
+- 🎓 **Politecnico di Milano** - Geoinformatics Engineering
+- 📧 **Email**: [ghulamabbas.zafari@mail.polimi.it](mailto:ghulamabbas.zafari@mail.polimi.it)
+- 💻 **GitHub**: [@zafariabbas68](https://github.com/zafariabbas68)
+- 🔗 **LinkedIn**: [Ghulam Abbas Zafari](https://linkedin.com/in/ghulam-abbas-zafari)
+- 🌐 **Portfolio**: [Personal Website](https://personal-website-gaz.onrender.com)
+
+### **Project Links**
+- **Repository**: [https://github.com/zafariabbas68/GeoVision_Dashboard](https://github.com/zafariabbas68/GeoVision_Dashboard)
+- **Live Demo**: [https://geovision-dashboard.vercel.app](https://geovision-dashboard.vercel.app)
+- **API Documentation**: [https://geovision-backend.vercel.app/docs](https://geovision-backend.vercel.app/docs)
+- **Issue Tracker**: [GitHub Issues](https://github.com/zafariabbas68/GeoVision_Dashboard/issues)
+
+---
+
+## 🙏 **Acknowledgments**
+
+- **Angular Team** for the incredible frontend framework
+- **FastAPI Developers** for the high-performance Python framework
+- **Vercel** for providing free hosting services
+- **Leaflet Contributors** for the open-source mapping library
+- **NASA** for satellite data APIs and public datasets
+- **OpenStreetMap** for free map data and tiles
+- **OpenWeatherMap** for weather data APIs
+- **Politecnico di Milano** for academic support and resources
+
+---
+
+## ⭐ **Support**
+
+If you find this project helpful, please consider:
+- Giving it a ⭐ on GitHub
+- Sharing it with others
+- Contributing to its development
+- Reporting bugs or suggesting features
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by Ghulam Abbas Zafari for the Earth Observation Community</sub>
+  <br>
+  <sub>© 2025 GeoVision Dashboard. All rights reserved.</sub>
+</div>
