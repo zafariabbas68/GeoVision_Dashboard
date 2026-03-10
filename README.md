@@ -1,3 +1,5 @@
+
+
 # 🌍 GeoVision Dashboard
 
 [![Angular](https://img.shields.io/badge/Angular-19.2.1-red?logo=angular)](https://angular.io/)
@@ -8,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400/0a1929/ffffff?text=GeoVision+Dashboard" alt="GeoVision Dashboard Banner" width="800"/>
+  <img src="Dashboard.png" alt="GeoVision Dashboard Main View" width="800"/>
   <p><em>A comprehensive Earth Observation and Remote Sensing Dashboard for satellite tracking, vegetation analysis, and weather monitoring</em></p>
 </div>
 
@@ -384,22 +386,92 @@ DATABASE_URL=postgresql://user:password@ep-xyz.region.aws.neon.tech/dbname
 ## 📸 **Screenshots**
 
 <div align="center">
+  <h3>Main Dashboard</h3>
+  <img src="Dashboard.png" alt="Main Dashboard" width="900"/>
+  <p><em>Overview dashboard with key metrics and quick access to all features</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>Satellite Tracking Interface</h3>
+  <img src="Setellite.png" alt="Satellite Tracker" width="900"/>
+  <p><em>Real-time satellite tracking with pass predictions and orbital parameters</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>Live Satellite Tracking</h3>
+  <img src="Live_Tracking.png" alt="Live Satellite Tracking" width="900"/>
+  <p><em>Interactive map showing real-time satellite positions and trajectories</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>NDVI Analysis Visualization</h3>
+  <img src="NDVI.png" alt="NDVI Viewer" width="900"/>
+  <p><em>Vegetation health index visualization with color-coded mapping from dense vegetation (green) to barren land (brown)</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>Weather Dashboard</h3>
+  <img src="Weather_Dashboard.png" alt="Weather Dashboard" width="900"/>
+  <p><em>Comprehensive weather data with current conditions and 5-day forecasts</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>Detailed Weather Information</h3>
+  <img src="Weather.png" alt="Weather Details" width="900"/>
+  <p><em>Detailed weather information including temperature, humidity, wind speed, and atmospheric pressure</em></p>
+  
+  <br>
+  <hr>
+  <br>
+  
+  <h3>Saved Locations Management</h3>
+  <img src="Saved_Locations.png" alt="Saved Locations" width="900"/>
+  <p><em>Manage and access your favorite locations for quick satellite, NDVI, and weather analysis</em></p>
+</div>
+
+### **Screenshot Gallery (Compact View)**
+
+<div align="center">
   <table>
     <tr>
       <td align="center"><b>Main Dashboard</b></td>
       <td align="center"><b>Satellite Tracker</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Dashboard+View" width="400"/></td>
-      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Satellite+Tracking" width="400"/></td>
+      <td><img src="Dashboard.png" width="400"/></td>
+      <td><img src="Setellite.png" width="400"/></td>
     </tr>
     <tr>
+      <td align="center"><b>Live Tracking</b></td>
       <td align="center"><b>NDVI Analysis</b></td>
-      <td align="center"><b>Weather Dashboard</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=NDVI+Visualization" width="400"/></td>
-      <td><img src="https://via.placeholder.com/400x250/0a1929/ffffff?text=Weather+Forecast" width="400"/></td>
+      <td><img src="Live_Tracking.png" width="400"/></td>
+      <td><img src="NDVI.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Weather Dashboard</b></td>
+      <td align="center"><b>Weather Details</b></td>
+    </tr>
+    <tr>
+      <td><img src="Weather_Dashboard.png" width="400"/></td>
+      <td><img src="Weather.png" width="400"/></td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2"><b>Saved Locations</b></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><img src="Saved_Locations.png" width="800"/></td>
     </tr>
   </table>
 </div>
@@ -504,3 +576,4 @@ If you find this project helpful, please consider:
   <br>
   <sub>© 2025 GeoVision Dashboard. All rights reserved.</sub>
 </div>
+
