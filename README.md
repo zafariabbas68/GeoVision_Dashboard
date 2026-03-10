@@ -1,4 +1,4 @@
-cat > README.md << 'EOF'
+
 # 🌍 GeoVision Dashboard
 
 [![Angular](https://img.shields.io/badge/Angular-19.2.1-red?logo=angular)](https://angular.io/)
