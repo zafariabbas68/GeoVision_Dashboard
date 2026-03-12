@@ -1,12 +1,13 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-satellite-tracker',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   template: `
     <div class="satellite-tracker" [class.mobile-view]="isMobile">
       <!-- Mobile Header -->
@@ -18,7 +19,7 @@ import * as L from 'leaflet';
           <i class="bi bi-satellite"></i>
           Satellites
         </h1>
-        <button class="menu-toggle" (click)="toggleFilters()">
+        <button class="menu-toggle" (click)="showMobileFilters = !showMobileFilters">
           <i class="bi bi-funnel"></i>
         </button>
       </div>
@@ -107,7 +108,7 @@ import * as L from 'leaflet';
         </div>
       </div>
 
-      <!-- Mobile Satellite List (Bottom Sheet) -->
+      <!-- Mobile Bottom Sheet -->
       <div class="mobile-bottom-sheet" [class.open]="showMobileList && isMobile">
         <div class="sheet-header" (click)="toggleMobileList()">
           <div class="drag-handle"></div>
@@ -115,7 +116,7 @@ import * as L from 'leaflet';
         </div>
         <div class="sheet-content scrollable-y">
           <div class="satellite-item" *ngFor="let sat of filteredSatellites" 
-               (click)="selectSatellite(sat)">
+               (click)="selectSatellite(sat); showMobileList = false">
             <div class="satellite-info">
               <h4>{{ sat.name }}</h4>
               <p>Type: {{ sat.type | uppercase }}</p>
@@ -421,6 +422,79 @@ export class SatelliteTrackerComponent implements OnInit, AfterViewInit, OnDestr
   showMobileList: boolean = false;
   selectedType: string = 'all';
   selectedStatus: string = 'all';
+  selectedSatellite: any = null;
   
-  // ... rest of your component logic remains the same
+  satellites = [
+    { id: 1, name: 'ISS (ZARYA)', type: 'leo', status: 'active' },
+    { id: 2, name: 'HUBBLE', type: 'leo', status: 'active' },
+    { id: 3, name: 'LANDSAT 8', type: 'leo', status: 'active' },
+    { id: 4, name: 'SENTINEL-2A', type: 'leo', status: 'active' },
+    { id: 5, name: 'GOES-16', type: 'geo', status: 'active' }
+  ];
+  
+  filteredSatellites: any[] = [];
+  private map: any;
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  ngOnInit() {
+    this.isMobile = window.innerWidth <= 768;
+    this.filteredSatellites = [...this.satellites];
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.initMap();
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.remove();
+    }
+  }
+
+  private initMap(): void {
+    const mapElement = document.getElementById('satelliteMap');
+    if (!mapElement) return;
+
+    this.map = L.map('satelliteMap').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
+  }
+
+  filterSatellites() {
+    this.filteredSatellites = this.satellites.filter(sat => {
+      if (this.selectedType !== 'all' && sat.type !== this.selectedType) return false;
+      if (this.selectedStatus !== 'all' && sat.status !== this.selectedStatus) return false;
+      return true;
+    });
+  }
+
+  selectSatellite(satellite: any) {
+    this.selectedSatellite = satellite;
+    this.showMobileList = false;
+    // Center map on satellite (you can add coordinates later)
+  }
+
+  toggleMobileList() {
+    this.showMobileList = !this.showMobileList;
+  }
+
+  zoomIn() {
+    if (this.map) this.map.zoomIn();
+  }
+
+  zoomOut() {
+    if (this.map) this.map.zoomOut();
+  }
+
+  centerOnEarth() {
+    if (this.map) this.map.setView([20, 0], 2);
+  }
 }
