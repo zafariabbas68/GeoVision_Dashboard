@@ -1,173 +1,102 @@
-/* Global Responsive Styles */
+/* Professional Dashboard Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Base styles */
-:root {
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --text-primary: #2c3e50;
-  --text-secondary: #6c757d;
-  --border-radius: 16px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Dark theme variables */
-[data-theme="dark"] {
-  --card-bg: #2d2d44;
-  --text-primary: #fff;
-  --text-secondary: #aaa;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
 
-/* Responsive container */
-.container-fluid {
-  padding-right: var(--spacing-md);
-  padding-left: var(--spacing-md);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Mobile First Approach */
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  :root {
-    --border-radius: 12px;
-    --spacing-lg: 16px;
-    --spacing-xl: 24px;
-  }
-
-  h1 {
-    font-size: 1.8rem !important;
-  }
-
-  h2 {
-    font-size: 1.5rem !important;
-  }
-
-  h3 {
-    font-size: 1.2rem !important;
-  }
-
-  .container-fluid {
-    padding-right: var(--spacing-sm);
-    padding-left: var(--spacing-sm);
-  }
-
-  /* Improve touch targets */
-  button, 
-  .btn,
-  .nav-link,
-  .city-chip,
-  .action-btn {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Better spacing for mobile */
-  .card-body {
-    padding: var(--spacing-md) !important;
-  }
-
-  /* Make tables scrollable horizontally */
-  .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
-/* Small devices (portrait tablets and large phones, 600px to 768px) */
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-  :root {
-    --spacing-lg: 20px;
-    --spacing-xl: 28px;
-  }
-
-  .container-fluid {
-    padding-right: var(--spacing-md);
-    padding-left: var(--spacing-md);
-  }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
 }
 
-/* Medium devices (landscape tablets, 768px to 992px) */
-@media only screen and (min-width: 769px) and (max-width: 992px) {
-  .container-fluid {
-    padding-right: var(--spacing-lg);
-    padding-left: var(--spacing-lg);
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 993px) {
-  .container-fluid {
-    padding-right: var(--spacing-xl);
-    padding-left: var(--spacing-xl);
-  }
+/* Glassmorphism Effects */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Common responsive utilities */
-.responsive-grid {
-  display: grid;
-  gap: var(--spacing-md);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.gradient-text {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Hide on mobile */
-.hide-on-mobile {
-  @media only screen and (max-width: 768px) {
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Loading States */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.2rem !important; }
+  p { font-size: 0.9rem !important; }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
     display: none !important;
   }
-}
-
-/* Show only on mobile */
-.show-on-mobile {
-  display: none !important;
-  @media only screen and (max-width: 768px) {
+  
+  .print-only {
     display: block !important;
-  }
-}
-
-/* Touch-friendly scrolling */
-.scrollable-x {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-.scrollable-y {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-/* Responsive images and maps */
-img, 
-.leaflet-container {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Improved form elements for mobile */
-input, 
-select, 
-textarea {
-  font-size: 16px !important; /* Prevents zoom on iOS */
-  max-width: 100%;
-}
-
-/* Card hover effects - disable on mobile */
-@media (hover: hover) {
-  .card:hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s;
-  }
-}
-
-@media (hover: none) {
-  .card:active {
-    transform: scale(0.98);
   }
 }
