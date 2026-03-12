@@ -1,0 +1,237 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, forkJoin, of, catchError, throwError, timeout } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+export interface WeatherData {
+  city: string;
+  country: string;
+  temperature: number;
+  feelsLike: number;
+  condition: string;
+  description: string;
+  icon: string;
+  humidity: number;
+  windSpeed: number;
+  windDirection: number;
+  pressure: number;
+  visibility: number;
+  uvIndex: number;
+  sunrise: Date;
+  sunset: Date;
+  timezone: number;
+}
+
+export interface ForecastDay {
+  date: Date;
+  tempMin: number;
+  tempMax: number;
+  condition: string;
+  icon: string;
+  precipitation: number;
+  humidity: number;
+  windSpeed: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RealDataService {
+  
+  constructor(private http: HttpClient) {}
+
+  // ==================== WEATHER DATA WITH FALLBACK ====================
+
+  /**
+   * Get current weather from OpenWeatherMap with fallback to mock data
+   */
+  getCurrentWeather(city: string = 'Milan'): Observable<WeatherData> {
+    const url = `${environment.weatherApiUrl}/weather?q=${city}&units=metric&appid=${environment.openWeatherApiKey}`;
+    
+    return this.http.get(url).pipe(
+      timeout(5000), // Timeout after 5 seconds
+      map((response: any) => {
+        console.log('Weather API response:', response);
+        return {
+          city: response.name,
+          country: response.sys.country,
+          temperature: Math.round(response.main.temp),
+          feelsLike: Math.round(response.main.feels_like),
+          condition: response.weather[0].main,
+          description: response.weather[0].description,
+          icon: response.weather[0].icon,
+          humidity: response.main.humidity,
+          windSpeed: Math.round(response.wind.speed * 3.6) / 3.6, // Convert to km/h
+          windDirection: response.wind.deg,
+          pressure: response.main.pressure,
+          visibility: (response.visibility || 10000) / 1000,
+          uvIndex: 0,
+          sunrise: new Date(response.sys.sunrise * 1000),
+          sunset: new Date(response.sys.sunset * 1000),
+          timezone: response.timezone
+        };
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.warn('Weather API failed, using mock data:', error.message);
+        return of(this.getMockWeatherData(city));
+      })
+    );
+  }
+
+  /**
+   * Get 5-day weather forecast with fallback to mock data
+   */
+  getWeatherForecast(city: string = 'Milan'): Observable<ForecastDay[]> {
+    const url = `${environment.weatherApiUrl}/forecast?q=${city}&units=metric&appid=${environment.openWeatherApiKey}`;
+    
+    return this.http.get(url).pipe(
+      timeout(5000),
+      map((response: any) => {
+        console.log('Forecast API response:', response);
+        const dailyData = this.groupForecastByDay(response.list);
+        return dailyData.slice(0, 5).map((day: any) => ({
+          date: new Date(day.dt * 1000),
+          tempMin: Math.round(day.main.temp_min),
+          tempMax: Math.round(day.main.temp_max),
+          condition: day.weather[0].main,
+          icon: day.weather[0].icon,
+          precipitation: day.pop ? day.pop * 100 : 0,
+          humidity: day.main.humidity,
+          windSpeed: Math.round(day.wind.speed * 3.6) / 3.6
+        }));
+      }),
+      catchError((error) => {
+        console.warn('Forecast API failed, using mock data:', error.message);
+        return of(this.getMockForecastData());
+      })
+    );
+  }
+
+  private groupForecastByDay(forecastList: any[]): any[] {
+    const daily: any = {};
+    forecastList.forEach(item => {
+      const date = new Date(item.dt * 1000).toDateString();
+      if (!daily[date] || item.main.temp_max > daily[date].main.temp_max) {
+        daily[date] = item;
+      }
+    });
+    return Object.values(daily);
+  }
+
+  private getMockWeatherData(city: string): WeatherData {
+    const mockData: { [key: string]: WeatherData } = {
+      'Milan': {
+        city: 'Milan',
+        country: 'IT',
+        temperature: 22,
+        feelsLike: 21,
+        condition: 'Clear',
+        description: 'clear sky',
+        icon: '01d',
+        humidity: 65,
+        windSpeed: 12,
+        windDirection: 180,
+        pressure: 1013,
+        visibility: 10,
+        uvIndex: 4,
+        sunrise: new Date(),
+        sunset: new Date(),
+        timezone: 3600
+      },
+      'Rome': {
+        city: 'Rome',
+        country: 'IT',
+        temperature: 24,
+        feelsLike: 23,
+        condition: 'Sunny',
+        description: 'sunny',
+        icon: '01d',
+        humidity: 60,
+        windSpeed: 10,
+        windDirection: 200,
+        pressure: 1015,
+        visibility: 10,
+        uvIndex: 5,
+        sunrise: new Date(),
+        sunset: new Date(),
+        timezone: 3600
+      },
+      'Venice': {
+        city: 'Venice',
+        country: 'IT',
+        temperature: 20,
+        feelsLike: 19,
+        condition: 'Clouds',
+        description: 'scattered clouds',
+        icon: '03d',
+        humidity: 70,
+        windSpeed: 15,
+        windDirection: 150,
+        pressure: 1010,
+        visibility: 8,
+        uvIndex: 3,
+        sunrise: new Date(),
+        sunset: new Date(),
+        timezone: 3600
+      }
+    };
+    
+    return mockData[city] || mockData['Milan'];
+  }
+
+  private getMockForecastData(): ForecastDay[] {
+    const today = new Date();
+    return [
+      {
+        date: new Date(today),
+        tempMin: 18,
+        tempMax: 24,
+        condition: 'Sunny',
+        icon: '01d',
+        precipitation: 0,
+        humidity: 60,
+        windSpeed: 12
+      },
+      {
+        date: new Date(today.setDate(today.getDate() + 1)),
+        tempMin: 17,
+        tempMax: 23,
+        condition: 'Clouds',
+        icon: '03d',
+        precipitation: 20,
+        humidity: 65,
+        windSpeed: 14
+      },
+      {
+        date: new Date(today.setDate(today.getDate() + 2)),
+        tempMin: 16,
+        tempMax: 22,
+        condition: 'Rain',
+        icon: '10d',
+        precipitation: 60,
+        humidity: 75,
+        windSpeed: 18
+      },
+      {
+        date: new Date(today.setDate(today.getDate() + 3)),
+        tempMin: 15,
+        tempMax: 21,
+        condition: 'Clouds',
+        icon: '04d',
+        precipitation: 30,
+        humidity: 70,
+        windSpeed: 16
+      },
+      {
+        date: new Date(today.setDate(today.getDate() + 4)),
+        tempMin: 17,
+        tempMax: 23,
+        condition: 'Clear',
+        icon: '01d',
+        precipitation: 0,
+        humidity: 55,
+        windSpeed: 10
+      }
+    ];
+  }
+}
