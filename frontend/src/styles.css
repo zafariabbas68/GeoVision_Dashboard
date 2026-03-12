@@ -1,179 +1,173 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #f8f9fa;
+/* Global Responsive Styles */
+
+/* Base styles */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-primary: #2c3e50;
+  --text-secondary: #6c757d;
+  --border-radius: 16px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 }
 
-/* Leaflet map fixes */
-.leaflet-container {
-  font-family: inherit;
+/* Dark theme variables */
+[data-theme="dark"] {
+  --card-bg: #2d2d44;
+  --text-primary: #fff;
+  --text-secondary: #aaa;
 }
 
-.leaflet-popup-content {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Card hover effects */
-.card {
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
-}
-
-/* Progress bars */
-.progress {
-  background-color: #e9ecef;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  transition: width 0.6s ease;
-}
-
-/* Badge styles */
-.badge {
-  padding: 0.5em 0.75em;
-  font-weight: 500;
-}
-
-/* Form controls */
-.form-control:focus, .form-select:focus {
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
-}
-
-/* Button styles */
-.btn {
-  border-radius: 6px;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* Responsive fixes */
-@media (max-width: 768px) {
-  .display-4 {
-    font-size: 2rem;
-  }
-  
-  .container-fluid {
-    padding: 10px;
-  }
-}
-
-/* Additional layout fixes */
+/* Responsive container */
 .container-fluid {
-  padding-left: 25px;
-  padding-right: 25px;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
 }
 
-/* Card enhancements */
-.card {
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
-  overflow: hidden;
-}
+/* Mobile First Approach */
 
-.card-header {
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  padding: 1rem 1.5rem;
-  font-weight: 600;
-}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  :root {
+    --border-radius: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+  }
 
-.card-body {
-  padding: 1.5rem;
-}
+  h1 {
+    font-size: 1.8rem !important;
+  }
 
-/* Button enhancements */
-.btn {
-  border-radius: 8px;
-  font-weight: 500;
-  padding: 0.6rem 1.5rem;
-}
+  h2 {
+    font-size: 1.5rem !important;
+  }
 
-/* Form controls */
-.form-control, .form-select {
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  padding: 0.6rem 1rem;
-}
+  h3 {
+    font-size: 1.2rem !important;
+  }
 
-.form-control:focus, .form-select:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-}
-
-/* Badge styling */
-.badge {
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
-/* Progress bars */
-.progress {
-  height: 8px;
-  border-radius: 4px;
-  background-color: #f0f0f0;
-}
-
-.progress-bar {
-  border-radius: 4px;
-}
-
-/* Map containers */
-.map-container {
-  height: 500px;
-  width: 100%;
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
   .container-fluid {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-right: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
   }
-  
+
+  /* Improve touch targets */
+  button, 
+  .btn,
+  .nav-link,
+  .city-chip,
+  .action-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better spacing for mobile */
   .card-body {
-    padding: 1rem;
+    padding: var(--spacing-md) !important;
   }
-  
-  .map-container {
-    height: 400px;
+
+  /* Make tables scrollable horizontally */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px to 768px) */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  :root {
+    --spacing-lg: 20px;
+    --spacing-xl: 28px;
+  }
+
+  .container-fluid {
+    padding-right: var(--spacing-md);
+    padding-left: var(--spacing-md);
+  }
+}
+
+/* Medium devices (landscape tablets, 768px to 992px) */
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .container-fluid {
+    padding-right: var(--spacing-lg);
+    padding-left: var(--spacing-lg);
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 993px) {
+  .container-fluid {
+    padding-right: var(--spacing-xl);
+    padding-left: var(--spacing-xl);
+  }
+}
+
+/* Common responsive utilities */
+.responsive-grid {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Hide on mobile */
+.hide-on-mobile {
+  @media only screen and (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+/* Show only on mobile */
+.show-on-mobile {
+  display: none !important;
+  @media only screen and (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+/* Touch-friendly scrolling */
+.scrollable-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.scrollable-y {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Responsive images and maps */
+img, 
+.leaflet-container {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improved form elements for mobile */
+input, 
+select, 
+textarea {
+  font-size: 16px !important; /* Prevents zoom on iOS */
+  max-width: 100%;
+}
+
+/* Card hover effects - disable on mobile */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s;
+  }
+}
+
+@media (hover: none) {
+  .card:active {
+    transform: scale(0.98);
   }
 }
