@@ -1,58 +1,47 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
-import logging
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+from .database import engine, Base
+from .auth import router as auth_router
+from .satellites import router as satellites_router
+from .indices import router as indices_router
+from .weather import router as weather_router
+from .sensors import router as sensors_router
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="GeoVision API",
-    description="Earth Observation and Remote Sensing API",
+    title="GeoVision Dashboard API",
+    description="Earth Observation and Environmental Monitoring API",
     version="1.0.0",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc"
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:4200", 
-        "http://localhost:8080",
-        "http://127.0.0.1:4200"
-    ],
+    allow_origins=["http://localhost:4200", "http://localhost:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Health check endpoint
-@app.get("/api/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "version": "1.0.0",
-        "timestamp": datetime.utcnow().isoformat()
-    }
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(satellites_router, prefix="/api/satellites", tags=["Satellites"])
+app.include_router(indices_router, prefix="/api/indices", tags=["Indices"])
+app.include_router(weather_router, prefix="/api/weather", tags=["Weather"])
+app.include_router(sensors_router, prefix="/api/sensors", tags=["Sensors"])
 
-# Simple test endpoints
 @app.get("/")
-async def root():
+def root():
     return {
-        "message": "Welcome to GeoVision API",
-        "docs": "/api/docs",
-        "version": "1.0.0"
+        "message": "GeoVision Dashboard API",
+        "version": "1.0.0",
+        "docs": "/docs"
     }
 
-@app.get("/api/test")
-async def test():
-    return {"message": "API is working!"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+@app.get("/api/health")
+def health_check():
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}

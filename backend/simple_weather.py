@@ -1,12 +1,24 @@
-from fastapi import APIRouter, Query
+from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 import random
 import math
+import uvicorn
 
-router = APIRouter()
+app = FastAPI(title="Weather API", version="1.0.0")
 
-def generate_weather_data(city: str):
-    """Generate realistic weather data"""
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mock weather data generator
+def generate_weather(city: str):
+    # Generate realistic but random weather
     hour = datetime.now().hour
     temp_base = 20
     temp = temp_base + math.sin((hour - 6) * math.pi / 12) * 3 + random.randint(-2, 2)
@@ -37,17 +49,19 @@ def generate_weather_data(city: str):
         "timestamp": datetime.now().isoformat()
     }
 
-@router.get("/current")
-async def get_current_weather(city: str = Query(..., description="City name")):
-    """Get current weather for a city"""
-    return generate_weather_data(city)
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
 
-@router.get("/forecast")
+@app.get("/api/weather/current")
+async def get_current_weather(city: str = Query(..., description="City name")):
+    return generate_weather(city)
+
+@app.get("/api/weather/forecast")
 async def get_weather_forecast(city: str = Query(...), days: int = 5):
-    """Get weather forecast"""
     forecast = []
     for i in range(days):
-        day_weather = generate_weather_data(city)
+        day_weather = generate_weather(city)
         forecast.append({
             "date": (datetime.now().replace(hour=12, minute=0) + timedelta(days=i)).isoformat(),
             "temperature": day_weather["temperature"],
@@ -58,3 +72,6 @@ async def get_weather_forecast(city: str = Query(...), days: int = 5):
             "precipitation": random.randint(0, 30) if day_weather["weather_main"] == "Rain" else 0
         })
     return forecast
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

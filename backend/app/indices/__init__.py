@@ -6,7 +6,6 @@ router = APIRouter()
 
 @router.get("/ndvi/point")
 async def get_ndvi_at_point(lat: float = Query(...), lon: float = Query(...)):
-    """Get NDVI value at a specific point"""
     ndvi = random.uniform(0.3, 0.9)
     return {
         "lat": lat,
@@ -18,7 +17,6 @@ async def get_ndvi_at_point(lat: float = Query(...), lon: float = Query(...)):
 
 @router.post("/ndvi/statistics")
 async def get_ndvi_statistics(bounds: dict):
-    """Get NDVI statistics for a region"""
     return {
         "mean": round(random.uniform(0.4, 0.7), 3),
         "max": round(random.uniform(0.7, 0.9), 3),

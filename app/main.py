@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 
 from .database import engine, Base
+from .auth import router as auth_router
+from .satellites import router as satellites_router
+from .indices import router as indices_router
+from .weather import router as weather_router
+from .sensors import router as sensors_router
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -28,6 +33,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include routers
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(satellites_router, prefix="/api/satellites", tags=["Satellites"])
+app.include_router(indices_router, prefix="/api/indices", tags=["Indices"])
+app.include_router(weather_router, prefix="/api/weather", tags=["Weather"])
+app.include_router(sensors_router, prefix="/api/sensors", tags=["Sensors"])
+
 @app.get("/")
 def root():
     """Root endpoint with API information"""
@@ -36,7 +48,12 @@ def root():
         "version": "1.0.0",
         "documentation": "/docs",
         "endpoints": {
-            "health": "/api/health"
+            "health": "/api/health",
+            "auth": "/api/auth/*",
+            "satellites": "/api/satellites/*",
+            "indices": "/api/indices/*",
+            "weather": "/api/weather/*",
+            "sensors": "/api/sensors/*"
         }
     }
 
@@ -47,6 +64,3 @@ def health_check():
         "status": "healthy",
         "timestamp": datetime.now().isoformat()
     }
-
-# This ensures the app is properly exported
-__all__ = ["app"]

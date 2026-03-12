@@ -6,7 +6,6 @@ import math
 router = APIRouter()
 
 def generate_weather_data(city: str):
-    """Generate realistic weather data"""
     hour = datetime.now().hour
     temp_base = 20
     temp = temp_base + math.sin((hour - 6) * math.pi / 12) * 3 + random.randint(-2, 2)
@@ -39,12 +38,10 @@ def generate_weather_data(city: str):
 
 @router.get("/current")
 async def get_current_weather(city: str = Query(..., description="City name")):
-    """Get current weather for a city"""
     return generate_weather_data(city)
 
 @router.get("/forecast")
 async def get_weather_forecast(city: str = Query(...), days: int = 5):
-    """Get weather forecast"""
     forecast = []
     for i in range(days):
         day_weather = generate_weather_data(city)

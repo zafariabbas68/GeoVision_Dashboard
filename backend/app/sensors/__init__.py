@@ -6,7 +6,6 @@ router = APIRouter()
 
 @router.get("/status")
 async def get_sensor_status():
-    """Get sensor network status"""
     total = 156
     active = random.randint(150, 156)
     return {

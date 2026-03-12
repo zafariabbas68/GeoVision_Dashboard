@@ -9,13 +9,10 @@ SATELLITES = [
     {"id": "20580", "name": "HUBBLE", "country": "USA", "altitude": 540, "speed": 7.5},
     {"id": "39084", "name": "LANDSAT 8", "country": "USA", "altitude": 705, "speed": 7.5},
     {"id": "40697", "name": "SENTINEL-2A", "country": "Europe", "altitude": 786, "speed": 7.4},
-    {"id": "43013", "name": "NOAA 20", "country": "USA", "altitude": 824, "speed": 7.4},
-    {"id": "41866", "name": "GOES-16", "country": "USA", "altitude": 35786, "speed": 3.07}
 ]
 
 @router.get("/positions")
 async def get_satellite_positions():
-    """Get real-time satellite positions"""
     positions = []
     for sat in SATELLITES:
         positions.append({
@@ -31,22 +28,4 @@ async def get_satellite_positions():
 
 @router.get("/active")
 async def get_active_satellites():
-    """Get list of active satellites"""
     return [{"name": s["name"], "noradId": s["id"], "status": "active"} for s in SATELLITES]
-
-@router.get("/passes")
-async def get_satellite_passes(lat: float = Query(...), lon: float = Query(...), days: int = 7):
-    """Get upcoming satellite passes for a location"""
-    passes = []
-    for sat in SATELLITES[:3]:
-        for i in range(min(days, 3)):
-            pass_time = datetime.now() + timedelta(days=i, hours=random.randint(0, 23))
-            passes.append({
-                "satellite": sat["name"],
-                "noradId": sat["id"],
-                "startTime": pass_time.isoformat(),
-                "endTime": (pass_time + timedelta(minutes=10)).isoformat(),
-                "maxElevation": random.randint(30, 85),
-                "direction": "ascending" if random.random() > 0.5 else "descending"
-            })
-    return sorted(passes, key=lambda x: x["startTime"])[:10]
