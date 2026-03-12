@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend": {
+    "geovision-dashboard": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/frontend",
+            "outputPath": "dist/geovision-dashboard",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -21,27 +21,15 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/icons",
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "node_modules/leaflet/dist/leaflet.css",
-              "src/styles.css"
+              "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "leaflet",
-              "chart.js",
-              "xlsx",
-              "jspdf",
-              "socket.io-client",
-              "debug",
-              "ms"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -53,8 +41,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "outputHashing": "all"
@@ -65,19 +53,7 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -86,18 +62,15 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "buildTarget": "geovision-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "geovision-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "30c9bfb0-5970-4579-81aa-c664eac7280c"
   }
 }
