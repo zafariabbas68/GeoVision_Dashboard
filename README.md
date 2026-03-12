@@ -7,6 +7,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://python.org)
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite)](https://sqlite.org/)
 [![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet)](https://leafletjs.com/)
+[![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?logo=render)](https://render.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 <div align="center">
@@ -15,19 +16,36 @@
 </div>
 
 ## 📋 **Table of Contents**
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [API Documentation](#-api-documentation)
-- [Deployment](#-deployment)
-- [Screenshots](#-screenshots)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+- [🚀 Live Demo](#-live-demo)
+- [🔭 Overview](#-overview)
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [🏗️ Architecture](#️-architecture)
+- [📋 Prerequisites](#-prerequisites)
+- [🔧 Installation](#-installation)
+- [🚀 Usage](#-usage)
+- [📚 API Documentation](#-api-documentation)
+- [🚢 Deployment](#-deployment)
+- [📸 Screenshots](#-screenshots)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📞 Contact](#-contact)
+
+---
+
+## 🚀 **Live Demo**
+
+The application is live and accessible at:
+
+- **Frontend Application**: [https://geovision-frontend-ikof.onrender.com](https://geovision-frontend-ikof.onrender.com)
+- **Backend API**: [https://geovision-backend.onrender.com](https://geovision-backend.onrender.com)
+- **API Documentation**: [https://geovision-backend.onrender.com/docs](https://geovision-backend.onrender.com/docs)
+
+**Demo Credentials:**
+- **Username**: `admin`
+- **Password**: `admin123`
+
+> ⚠️ **Note**: The free tier services may spin down after periods of inactivity. The first request after inactivity might take 30-60 seconds to wake up.
 
 ---
 
@@ -101,7 +119,7 @@ Built with modern technologies, this platform serves as a comprehensive tool for
 |-----------|------------|---------|
 | Database | SQLite/PostgreSQL | Data persistence |
 | Migrations | Alembic | Database version control |
-| Hosting | Vercel | Frontend & backend deployment |
+| Hosting | Render | Frontend & backend deployment |
 | Version Control | Git/GitHub | Source code management |
 
 ---
@@ -309,77 +327,37 @@ After first setup, you can use these credentials:
 
 ## 🚢 **Deployment**
 
-### **Frontend Deployment on Vercel**
-```bash
-# Install Vercel CLI
-npm i -g vercel
+### **Frontend Deployment on Render**
 
-# Navigate to frontend directory
-cd frontend
+The frontend is deployed as a static site on Render:
 
-# Deploy to Vercel
-vercel
+1. **Connect Repository**: Link your GitHub repository to Render
+2. **Configuration**:
+   - **Build Command**: `cd frontend && npm install && npm run build`
+   - **Publish Directory**: `frontend/dist/geovision-dashboard`
+   - **Node Version**: 18+
 
-# Follow the prompts and set environment variables:
-# - production: true
-# - apiUrl: https://your-backend-url.vercel.app/api
-```
+3. **Environment Variables**:
+   - `NODE_VERSION`: 18.18.0
 
-### **Backend Deployment on Vercel**
-1. **Prepare backend for serverless deployment:**
-```bash
-# From project root, create API directory
-mkdir -p api
+### **Backend Deployment on Render**
 
-# Create a serverless entry point
-cat > api/index.py << EOF
-from backend.app.main import app
+The backend is deployed as a web service on Render:
 
-# Vercel serverless handler
-handler = app
-EOF
+1. **Configuration**:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
-# Create vercel.json in root
-cat > vercel.json << EOF
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    }
-  ]
-}
-EOF
-```
+2. **Environment Variables**:
+   - `PYTHON_VERSION`: 3.11.9
+   - `DATABASE_URL`: (Production database URL)
+   - `SECRET_KEY`: (Your secret key)
+   - `OPENWEATHER_API_KEY`: (Optional, for weather data)
 
-2. **Deploy backend:**
-```bash
-# Deploy from project root
-vercel
-
-# Set environment variables in Vercel dashboard:
-# - DATABASE_URL (use PostgreSQL for production)
-# - SECRET_KEY
-# - OPENWEATHER_API_KEY
-```
-
-### **Production Database Setup**
-For production, use PostgreSQL:
-```bash
-# Example using Neon (free tier)
-# Sign up at https://neon.tech
-# Create a database and get connection string
-
-# Update your DATABASE_URL environment variable
-DATABASE_URL=postgresql://user:password@ep-xyz.region.aws.neon.tech/dbname
-```
+### **Live URLs**
+- **Frontend**: [https://geovision-frontend-ikof.onrender.com](https://geovision-frontend-ikof.onrender.com)
+- **Backend API**: [https://geovision-backend.onrender.com](https://geovision-backend.onrender.com)
+- **API Documentation**: [https://geovision-backend.onrender.com/docs](https://geovision-backend.onrender.com/docs)
 
 ---
 
@@ -542,8 +520,9 @@ of this software and associated documentation files...
 
 ### **Project Links**
 - **Repository**: [https://github.com/zafariabbas68/GeoVision_Dashboard](https://github.com/zafariabbas68/GeoVision_Dashboard)
-- **Live Demo**: [https://geovision-dashboard.vercel.app](https://geovision-dashboard.vercel.app)
-- **API Documentation**: [https://geovision-backend.vercel.app/docs](https://geovision-backend.vercel.app/docs)
+- **Live Demo**: [https://geovision-frontend-ikof.onrender.com](https://geovision-frontend-ikof.onrender.com)
+- **Backend API**: [https://geovision-backend.onrender.com](https://geovision-backend.onrender.com)
+- **API Documentation**: [https://geovision-backend.onrender.com/docs](https://geovision-backend.onrender.com/docs)
 - **Issue Tracker**: [GitHub Issues](https://github.com/zafariabbas68/GeoVision_Dashboard/issues)
 
 ---
@@ -552,7 +531,7 @@ of this software and associated documentation files...
 
 - **Angular Team** for the incredible frontend framework
 - **FastAPI Developers** for the high-performance Python framework
-- **Vercel** for providing free hosting services
+- **Render** for providing free hosting services
 - **Leaflet Contributors** for the open-source mapping library
 - **NASA** for satellite data APIs and public datasets
 - **OpenStreetMap** for free map data and tiles
@@ -576,4 +555,6 @@ If you find this project helpful, please consider:
   <br>
   <sub>© 2025 GeoVision Dashboard. All rights reserved.</sub>
 </div>
+
+
 
