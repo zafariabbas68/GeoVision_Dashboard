@@ -114,8 +114,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
             <div class="footer-section">
               <h5>Contact</h5>
               <ul>
-                <li><i class="bi bi-envelope"></i> ghulamabbas.zafari@mail.polimi.it</li>
-                <li><i class="bi bi-github"></i> @zafariabbas68</li>
+                <li><i class="bi bi-envelope"></i> ghulamabbas.zafari&#64;mail.polimi.it</li>
+                <li><i class="bi bi-github"></i> &#64;zafariabbas68</li>
                 <li><i class="bi bi-linkedin"></i> Ghulam Abbas Zafari</li>
               </ul>
             </div>
